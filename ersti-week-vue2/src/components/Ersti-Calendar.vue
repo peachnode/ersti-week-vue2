@@ -1,115 +1,91 @@
 <script>
+import events from "../assets/events.json"
+
 export default {
   data: () => ({
     focus: '',
     selectedEvent: {},
     selectedElement: null,
     selectedOpen: false,
-    events: [
-      {
-        name: "Begrüßung Bachelor & How TU Studium",
-        start: "2022-10-06T10:00:00",
-        end: "2022-10-06T12:00:00",
-        color: "red",
-        details: "Hybrid, H0104 /n https://tubcloud.tu-berlin.de/s/A8bTb8iTdptgywS"
-      },
-      {
-        name: "Begrüßung Master & How TU Studium",
-        start: "2022-10-06T13:00:00",
-        end: "2022-10-06T15:00:00",
-        color: "orange",
-        details: "Hybrid, H0104"
-      },
-      {
-        name: "Einführungsveranstaltung für internationale Studierende",
-        start: "2022-10-06T08:00:00",
-        end: "2022-10-06T18:00:00",
-        color: "purple",
-        details: "Hybrid, H0104"
-      },
-      {
-        name: "Einführung Wirtschaftsinformatik",
-        start: "2022-10-07T11:00:00",
-        end: "2022-10-07T12:00:00",
-        color: "red",
-        details: "Hybrid, H0104"
-      },
-      {
-        name: "Einführung Elektrotechnik",
-        start: "2022-10-07T11:15:00",
-        end: "2022-10-07T12:15:00",
-        color: "red",
-        details: "Hybrid, H0104"
-      },
-      {
-        name: "Einführung Technische Informatik",
-        start: "2022-10-07T14:00:00",
-        end: "2022-10-07T15:00:00",
-        color: "red",
-        details: "Hybrid, H0104"
-      },
-      {
-        name: "Einführung Automotive Systems",
-        start: "2022-10-07T10:00:00",
-        end: "2022-10-07T11:00:00",
-        color: "orange",
-        details: "Hybrid, H0104"
-      },
-      {
-        name: "Einführung Elektrotechnik",
-        start: "2022-10-07T10:00:00",
-        end: "2022-10-07T11:00:00",
-        color: "orange",
-        details: "Hybrid, H0104"
-      },
-      {
-        name: "Einführung ICT Innovation",
-        start: "2022-10-07T10:00:00",
-        end: "2022-10-07T12:00:00",
-        color: "orange",
-        details: "Hybrid, H0104"
-      },
-      {
-        name: "Einführung Computer Engineering",
-        start: "2022-10-07T15:00:00",
-        end: "2022-10-07T16:00:00",
-        color: "orange",
-        details: "Hybrid, H0104"
-      },
-      {
-        name: "Einführungsveranstaltung für internationale Studierende",
-        start: "2022-10-07T08:00:00",
-        end: "2022-10-07T18:00:00",
-        color: "purple",
-        details: "Hybrid, H0104"
-      },
-      {
-        name: "Уні в Німеччині vs. Уні в Україні - Uni in Deutschland vs Uni in der Ukraine ",
-        start: "2022-10-08T11:00:00",
-        end: "2022-10-08T13:00:00",
-        color: "#0057B7",
-      },
-      {
-        name: "Schnitzeljagd durch Berlin",
-        start: "2022-10-09T14:00:00",
-        end: "2022-10-09T17:00:00",
-        color: "blue",
-      },
-    ]
+    events: events,
+    colorNameToHex: {
+      'black': '#000000',
+      'white': '#FFFFFF',
+      'red': '#FF0000',
+      'lime': '#00FF00',
+      'blue': '#0000FF',
+      'yellow': '#FFFF00',
+      'cyan': '#00FFFF',
+      'magenta': '#FF00FF',
+      'silver': '#C0C0C0',
+      'gray': '#808080',
+      'maroon': '#800000',
+      'olive': '#808000',
+      'green': '#008000',
+      'purple': '#800080',
+      'teal': '#008080',
+      'navy': '#000080',
+      'orange': '#FFA500',
+    },
   }),
   mounted () {
     this.$refs.calendar.checkChange()
+  },
+  computed: {
+    filteredEvents(){
+      return this.events.filter(event =>
+          (!event.international || this.international) &&
+          (this.degree === event.degree || !this.degree || !event.degree) &&
+          (!event.flinta || this.flinta) &&
+          (!event.ukrainian || this.ukrainian));
+    }
+  },
+  props: {
+    degree: {
+      type: String,
+      default: null,
+      validator: function(value){
+        return ['bachelor', 'master', null].includes(value);
+      }
+    },
+    flinta: {
+      type: Boolean,
+      default: false
+    },
+    ukrainian: {
+      type: Boolean,
+      default: true
+    },
+    international: {
+      type: Boolean,
+      default: true
+    }
   },
   methods: {
     viewDay ({ date }) {
       this.focus = date
       this.type = 'day'
     },
-    getEventColor (event) {
-      return event.color
+    rgbaColor(color, alpha) {
+      // If color is a name, convert it to hex
+      if (!color.startsWith('#')) {
+        color = this.colorNameToHex[color.toLowerCase()] || '#000000'; // Default to black if color name is not found
+      }
+
+      color = color.slice(1); // remove '#' from the start of the color
+
+      const r = parseInt(color.slice(0, 2), 16);
+      const g = parseInt(color.slice(2, 4), 16);
+      const b = parseInt(color.slice(4, 6), 16);
+
+      return `rgba(${r},${g},${b},${alpha})`;
     },
-    setToday () {
-      this.focus = ''
+    getEventColor(event) {
+      if(this.international && event.parallel) {
+        return this.rgbaColor(event.color, 0.2); // return a semi-transparent version of the event color
+      } else {
+        return event.color; // return the normal color if not international or not parallel
+      }
     },
     prev () {
       this.$refs.calendar.prev()
@@ -177,7 +153,7 @@ export default {
               ref="calendar"
               v-model="focus"
               color="primary"
-              :events="events"
+              :events="filteredEvents"
               :event-color="getEventColor"
               type="week"
               @click:event="showEvent"
@@ -202,7 +178,6 @@ export default {
                   :color="selectedEvent.color"
                   dark
               >
-
                 <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn icon>
@@ -230,5 +205,4 @@ export default {
 </template>
 
 <style scoped>
-
 </style>
