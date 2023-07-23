@@ -96,6 +96,15 @@
     "course": "m_ce"
   },
   {
+    "name": "Einführung Computer Science (M)",
+    "start": "2022-10-07",
+    "end": "2022-10-07",
+    "color": "orange",
+    "details": "Hybrid, H0104",
+    "degree": "master",
+    "course": "m_ce"
+  },
+  {
     "name": "Einführungsveranstaltung für internationale Studierende",
     "start": "2022-10-07T08:00:00",
     "end": "2022-10-07T18:00:00",
@@ -122,5 +131,59 @@
     "end": "2022-10-12T19:00:00",
     "color": "green",
     "flinta": true
+  },
+  {
+    "name": "E-Tag der TU Berlin",
+    "start": "2022-10-10T13:00:00",
+    "end": "2022-10-10T20:00:00",
+    "color": "blue"
+  },
+  {
+    "name": "Einführung Informatik (B)",
+    "start": "2022-10-10T12:15:00",
+    "end": "2022-10-10T14:00:00",
+    "color": "red",
+    "details": "Hybrid, EB 301",
+    "degree": "bachelor",
+    "parallel": true,
+    "course": "b_inf"
+  },
+  {
+    "name": "Einführung Medieninformatik (B)",
+    "start": "2022-10-10T12:00:00",
+    "end": "2022-10-10T14:00:00",
+    "color": "red",
+    "details": "Hybrid, MAR 0.011",
+    "degree": "bachelor",
+    "parallel": true,
+    "course": "b_mi"
+  },
+  {
+    "name": "Einführung Medieninformatik (B)",
+    "start": "2022-10-10T14:00:00",
+    "end": "2022-10-10T16:00:00",
+    "color": "red",
+    "details": "Hybrid, MAR 0.011",
+    "degree": "bachelor",
+    "parallel": true,
+    "course": "b_mt"
+  },
+  {
+    "name": "Q&A Computer Science (M)",
+    "start": "2022-10-10T15:00:00",
+    "end": "2022-10-10T16:00:00",
+    "color": "yellow",
+    "details": "online",
+    "degree": "master",
+    "course": "m_cs"
+  },
+  {
+    "name": "Einführung Medieninformatik (M)",
+    "start": "2022-10-10T16:00:00",
+    "end": "2022-10-10T18:00:00",
+    "color": "yellow",
+    "details": "Hybrid, MAR 0.011",
+    "degree": "master",
+    "course": "m_mi"
   }
 ]

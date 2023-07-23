@@ -6,9 +6,9 @@ export default {
     degrees: ['bachelor', 'master'],
     internalSelectedDegree: null,
     internalSelectedCourse: null,
-    internalUkrainian: true,
-    internalFlinta: true,
-    internalInternational: true,
+    internalUkrainian: null,
+    internalFlinta: null,
+    internalInternational: null,
   }),
   props: {
     coursesDict: {
@@ -83,6 +83,13 @@ export default {
     handleInternationalChange(){
       this.$emit('update:international', this.internalInternational);
     }
+  },
+  created() {
+    this.internalSelectedDegree = this.selected_degree;
+    this.internalSelectedCourse = this.selected_course;
+    this.internalUkrainian = this.ukrainian;
+    this.internalFlinta = this.flinta;
+    this.internalInternational = this.international;
   }
 
 }
