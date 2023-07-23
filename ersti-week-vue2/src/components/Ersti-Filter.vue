@@ -1,23 +1,29 @@
 <script>
+
 export default {
-  emits: ['update:selectedDegree','update:ukrainian', 'update:flinta', 'update:international'],
+  emits: ['update:selectedDegree', 'update:selectedCourse','update:ukrainian', 'update:flinta', 'update:international'],
   data: () => ({
     degrees: ['bachelor', 'master'],
-    b_courses: ['Wirtschaftsinformatik', 'Elektrotechnik', 'Technische Informatik', 'Automotive Systems'],
-    m_courses: ['Computer Science'],
     internalSelectedDegree: null,
-    selected_course: null,
+    internalSelectedCourse: null,
     internalUkrainian: true,
     internalFlinta: true,
     internalInternational: true,
   }),
   props: {
+    coursesDict: {
+      type: Object
+    }, //TODO add more
     selected_degree: {
       type: String,
       default: null,
       validator: function(value){
         return ['bachelor', 'master', null].includes(value);
       }
+    },
+    selected_course: { //TODO add validator
+      type: String,
+      default: null,
     },
     ukrainian: {
       type: Boolean,
@@ -34,13 +40,21 @@ export default {
   },
   computed: {
     courses() {
-      return this.selected_degree === 'Bachelor' ? this.b_courses : this.m_courses;
+      let degreePrefix = this.internalSelectedDegree === 'bachelor' ? 'b_' : 'm_';
+      let keys = Object.keys(this.coursesDict).filter(key => key.startsWith(degreePrefix));
+      return keys.map(key => {
+        return { text: this.coursesDict[key], value: key };
+      });
     },
   },
+
   watch: {
       selectedDegree(newVal){
         this.internalSelectedDegree = newVal;
       },
+    selectedCourse(newVal){
+      this.internalSelectedCourse = newVal;
+    },
     ukrainian(newVal){
       this.internalUkrainian = newVal;
     },
@@ -53,7 +67,12 @@ export default {
   },
   methods: {
     handleDegreeChange(){
-      this.$emit('update:selectedDegree', this.internalSelectedDegree)
+      this.$emit('update:selectedDegree', this.internalSelectedDegree);
+      this.internalSelectedCourse = null; // Set the selected course to null
+      this.$emit('update:selectedCourse', null); // Emit the course change
+    },
+    handleCourseChange(){
+      this.$emit('update:selectedCourse', this.internalSelectedCourse)
     },
     handleUkrainianChange(){
       this.$emit('update:ukrainian', this.internalUkrainian);
@@ -79,6 +98,16 @@ export default {
           label="Angestrebter Studienabschluss"
 
       ></v-select>
+      <v-select
+          v-if="selected_degree"
+          :items="courses"
+          v-model="internalSelectedCourse"
+          v-on:change="handleCourseChange"
+          item-text="text"
+          item-value="value"
+          label="Studiengang"
+      ></v-select>
+
       <v-switch
           v-model="internalUkrainian"
           @change="handleUkrainianChange"

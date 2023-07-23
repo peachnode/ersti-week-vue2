@@ -8,45 +8,31 @@ export default {
     selectedElement: null,
     selectedOpen: false,
     events: events,
-    colorNameToHex: {
-      'black': '#000000',
-      'white': '#FFFFFF',
-      'red': '#FF0000',
-      'lime': '#00FF00',
-      'blue': '#0000FF',
-      'yellow': '#FFFF00',
-      'cyan': '#00FFFF',
-      'magenta': '#FF00FF',
-      'silver': '#C0C0C0',
-      'gray': '#808080',
-      'maroon': '#800000',
-      'olive': '#808000',
-      'green': '#008000',
-      'purple': '#800080',
-      'teal': '#008080',
-      'navy': '#000080',
-      'orange': '#FFA500',
-    },
-  }),
+     }),
   mounted () {
     this.$refs.calendar.checkChange()
   },
   computed: {
     filteredEvents(){
       return this.events.filter(event =>
+          !(this.international && event.parallel) &&
           (!event.international || this.international) &&
           (this.degree === event.degree || !this.degree || !event.degree) &&
           (!event.flinta || this.flinta) &&
-          (!event.ukrainian || this.ukrainian));
+          (!event.ukrainian || this.ukrainian) &&
+          (this.course === event.course || !this.course || !event.course));
     }
   },
+
   props: {
+
     degree: {
       type: String,
-      default: null,
-      validator: function(value){
-        return ['bachelor', 'master', null].includes(value);
-      }
+      default: null
+    },
+    course: {
+      type:String,
+      default: null
     },
     flinta: {
       type: Boolean,
@@ -66,26 +52,9 @@ export default {
       this.focus = date
       this.type = 'day'
     },
-    rgbaColor(color, alpha) {
-      // If color is a name, convert it to hex
-      if (!color.startsWith('#')) {
-        color = this.colorNameToHex[color.toLowerCase()] || '#000000'; // Default to black if color name is not found
-      }
-
-      color = color.slice(1); // remove '#' from the start of the color
-
-      const r = parseInt(color.slice(0, 2), 16);
-      const g = parseInt(color.slice(2, 4), 16);
-      const b = parseInt(color.slice(4, 6), 16);
-
-      return `rgba(${r},${g},${b},${alpha})`;
-    },
     getEventColor(event) {
-      if(this.international && event.parallel) {
-        return this.rgbaColor(event.color, 0.2); // return a semi-transparent version of the event color
-      } else {
         return event.color; // return the normal color if not international or not parallel
-      }
+
     },
     prev () {
       this.$refs.calendar.prev()
@@ -162,7 +131,14 @@ export default {
               start="2022-10-06"
               first-time="7"
               interval-count="14"
-          ></v-calendar>
+          ><template v-slot:event="{ event }">
+            <div v-if="event.ukrainian" class="ukr-event">
+              {{ event.name }}
+            </div>
+            <div v-else>
+              {{ event.name }}
+            </div>
+          </template></v-calendar>
           <v-menu
               v-model="selectedOpen"
               :close-on-content-click="false"
@@ -205,4 +181,11 @@ export default {
 </template>
 
 <style scoped>
+.ukr-event {
+  background: #0057B7;
+  color: white;
+  border-radius: 4px;
+  padding: 2px;
+}
 </style>
+

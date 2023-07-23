@@ -1,0 +1,16 @@
+{
+  "b_wi": "Wirtschaftsinformatik",
+  "b_et": "Elektrotechnik",
+  "b_ti": "Technische Informatik",
+  "b_inf": "Informatik",
+  "b_mi": "Medieninformatik",
+  "b_mt": "Medientechnik",
+
+  "m_as": "Automotive Systems",
+  "m_ee": "Elektrotechnik",
+  "m_ict": "ICT Innovation",
+  "m_ism": "Information System Management",
+  "m_ce": "Computer Engineering",
+  "m_cs": "Computer Science",
+  "m_mi": "Medieninformatik"
+}

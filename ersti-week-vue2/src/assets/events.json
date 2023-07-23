@@ -32,7 +32,8 @@
     "color": "red",
     "details": "Hybrid, H0104",
     "degree": "bachelor",
-    "parallel": true
+    "parallel": true,
+    "course": "b_wi"
   },
   {
     "name": "Einführung Elektrotechnik (B)",
@@ -41,7 +42,8 @@
     "color": "red",
     "details": "Hybrid, H0104",
     "degree": "bachelor",
-    "parallel": true
+    "parallel": true,
+    "course": "b_et"
   },
   {
     "name": "Einführung Technische Informatik (B)",
@@ -50,7 +52,8 @@
     "color": "red",
     "details": "Hybrid, H0104",
     "degree": "bachelor",
-    "parallel": true
+    "parallel": true,
+    "course": "b_ti"
   },
   {
     "name": "Einführung Automotive Systems (M)",
@@ -59,7 +62,8 @@
     "color": "orange",
     "details": "Hybrid, H0104",
     "degree": "master",
-    "parallel": true
+    "parallel": true,
+    "course": "m_as"
   },
   {
     "name": "Einführung Elektrotechnik (M)",
@@ -68,7 +72,8 @@
     "color": "orange",
     "details": "Hybrid, H0104",
     "degree": "master",
-    "parallel": true
+    "parallel": true,
+    "course": "m_ee"
   },
   {
     "name": "Einführung ICT Innovation (M)",
@@ -77,7 +82,8 @@
     "color": "orange",
     "details": "Hybrid, H0104",
     "degree": "master",
-    "parallel": true
+    "parallel": true,
+    "course": "m_ict"
   },
   {
     "name": "Einführung Computer Engineering",
@@ -86,7 +92,8 @@
     "color": "orange",
     "details": "Hybrid, H0104",
     "degree": "master",
-    "parallel": true
+    "parallel": true,
+    "course": "m_ce"
   },
   {
     "name": "Einführungsveranstaltung für internationale Studierende",
@@ -100,7 +107,7 @@
     "name": "Уні в Німеччині vs. Уні в Україні - Uni in Deutschland vs Uni in der Ukraine ",
     "start": "2022-10-08T11:00:00",
     "end": "2022-10-08T13:00:00",
-    "color": "#0057B7",
+    "color": "yellow",
     "ukrainian": true
   },
   {
